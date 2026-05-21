@@ -1,4 +1,4 @@
-<%@page import="sub1.User3"%>
+<%@page import="sub1.User4"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
@@ -9,7 +9,7 @@
 	String userid = request.getParameter("userid");
 	
 	// 수정 데이터
-	User3 user3 = null;
+	User4 user4 = null;
 
 	// ----------------------------
 	// 데이터베이스 작업 - 수정 데이터 조회
@@ -26,7 +26,7 @@
 		Connection conn = DriverManager.getConnection(host, user, pass);
 
 		// 3) SQL 실행 객체 생성
-		String sql = "SELECT * FROM `User3` WHERE `userid` = ?";
+		String sql = "SELECT * FROM `User4` WHERE `userid` = ?";
 		PreparedStatement psmt = conn.prepareStatement(sql);
 		psmt.setString(1, userid);
 
@@ -35,12 +35,13 @@
 
 		// 5) 결과셋 처리 
 		if(rs.next()) {
-			user3 = new User3(); 
-			user3.setUserid(rs.getString(1));
-			user3.setName(rs.getString(2));
-			user3.setBirth(rs.getString(3));
-			user3.setHp(rs.getString(4));
-			user3.setAddr(rs.getString(5));
+			user4 = new User4(); 
+			user4.setUserid(rs.getString(1));
+			user4.setName(rs.getString(2));
+			user4.setGender(rs.getString(3));
+			user4.setAge(rs.getString(4));
+			user4.setHp(rs.getString(5));
+			user4.setAddr(rs.getString(6));
 		}
 
 		// 6) 데이터베이스 종료
@@ -59,47 +60,51 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>user3::수정</title>
+		<title>user4::수정</title>
 	</head>
 	<body>
-		<h3>User3 수정</h3>
+		<h3>user4 수정</h3>
 		
 		<a href="/ch05/1_jdbc.jsp">메인</a>
-		<a href="/ch05/user3/list.jsp">목록</a>
+		<a href="/ch05/user4/list.jsp">목록</a>
 		
-		<form action="/ch05/user3/proc/modify.jsp" method="post">
+		
+		<form action="/ch05/user4/proc/modify.jsp" method="post">
 			<table border="1">
 				<tr>
 					<td>아이디</td>
-					<td><input type="text" name="userid" value="<%= user3.getUserid() %>" readonly></td>
+					<td><input type="text" name="userid" value="<%= user4.getUserid() %>" readonly></td>
 				</tr>
 				<tr>
 					<td>이름</td>
-					<td><input type="text" name="name" value="<%= user3.getName() %>"></td>
+					<td><input type="text" name="name" value="<%= user4.getName() %>"></td>
 				</tr>
 				<tr>
-					<td>생년월일</td>
-					<td><input type="text" name="birth" value="<%= user3.getBirth() %>"></td>
+					<td>성별</td>
+					<td> 
+						<label><input type="radio" name="gender" value="M" <%= user4.getGender().equals("M") ? "checked" : "" %> >남</label>
+						<label><input type="radio" name="gender" value="F" <%= user4.getGender().equals("F") ? "checked" : "" %> >여</label>
+					</td>
+				</tr>
+				<tr>
+					<td>나이</td>
+					<td><input type="number" name="age" value="<%= user4.getAge() %>" ></td>
 				</tr>
 				<tr>
 					<td>휴대폰</td>
-					<td><input type="text" name="hp" value="<%= user3.getHp() %>"></td>
+					<td><input type="text" name="hp" value="<%= user4.getHp() %>" ></td>
 				</tr>
 				<tr>
 					<td>주소</td>
-					<td><input type="text" name="addr" value="<%= user3.getAddr() %>"></td>
+					<td><input type="text" name="addr" value="<%= user4.getAddr() %>" ></td>
 				</tr>
-				<tr>
+				<tr>				
 					<td colspan="2" align="right">
-						<input type="submit" value="수정하기"> 
+						<input type="submit" value="등록하기">
 					</td>
 				</tr>
-			
 			</table>
-			
-			
 		</form>
-		
 		
 	</body>
 </html>

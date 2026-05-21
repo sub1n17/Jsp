@@ -31,7 +31,7 @@
 				</tr>
 				<tr>
 					<td>주소</td>
-					<td><input type="number" name="addr"></td>
+					<td><input type="text" name="addr"></td>
 				</tr>
 				<tr>
 					<td colspan="2" align="right">

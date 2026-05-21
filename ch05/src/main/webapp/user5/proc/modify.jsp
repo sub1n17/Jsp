@@ -4,10 +4,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	// 전송 데이터 수신
-	String userid = request.getParameter("userid");
+	String seq = request.getParameter("seq");
 	String name = request.getParameter("name");
-	String birth = request.getParameter("birth");
-	String hp = request.getParameter("hp");
+	String gender = request.getParameter("gender");
+	String age = request.getParameter("age");
 	String addr = request.getParameter("addr");
 
 	// -------------------
@@ -26,14 +26,19 @@
 		Connection conn = DriverManager.getConnection(host, user, pass);
 
 		// 3) SQL 실행 객체 생성
-		String  sql = "INSERT INTO `User3` VALUES (?, ?, ?, ?, ?)";
+		String  sql = "UPDATE `user5` SET ";
+		sql+= "name=?,";
+		sql+= "gender=?,";
+		sql+= "age=?,";
+		sql+= "addr=? ";
+		sql+= "WHERE seq=?";
 		PreparedStatement psmt = conn.prepareStatement(sql);
 		
-		psmt.setString(1, userid);
-		psmt.setString(2, name);
-		psmt.setString(3, birth);
-		psmt.setString(4, hp);
-		psmt.setString(5, addr);
+		psmt.setString(1, name);
+		psmt.setString(2, gender);
+		psmt.setString(3, age);
+		psmt.setString(4, addr);
+		psmt.setString(5, seq);
 
 		// 4) SQL 실행
 		psmt.executeUpdate();
@@ -51,7 +56,7 @@
 	
 	
 	// 목록 이동
-	response.sendRedirect("/ch05/user3/list.jsp?register=success");
+	response.sendRedirect("/ch05/user5/list.jsp?modify=success");
 	
 
 

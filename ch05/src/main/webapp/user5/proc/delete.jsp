@@ -4,16 +4,15 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	// 전송 데이터 수신
-	String userid = request.getParameter("userid");
-	String name = request.getParameter("name");
-	String birth = request.getParameter("birth");
-	String hp = request.getParameter("hp");
-	String addr = request.getParameter("addr");
+	String seq = request.getParameter("seq");
+	//String name = request.getParameter("name");
+	//String birth = request.getParameter("birth");
+	//String hp = request.getParameter("hp");
+	//String addr = request.getParameter("addr");
 
 	// -------------------
 	// 데이터베이스 작업
 	// -------------------
-	
 	String host = "jdbc:mysql://127.0.0.1:3306/studydb";
 	String user = "sub1n17";
 	String pass = "1234";
@@ -26,14 +25,10 @@
 		Connection conn = DriverManager.getConnection(host, user, pass);
 
 		// 3) SQL 실행 객체 생성
-		String  sql = "INSERT INTO `User3` VALUES (?, ?, ?, ?, ?)";
-		PreparedStatement psmt = conn.prepareStatement(sql);
+		String  sql = "DELETE FROM `user5` WHERE seq=?";
 		
-		psmt.setString(1, userid);
-		psmt.setString(2, name);
-		psmt.setString(3, birth);
-		psmt.setString(4, hp);
-		psmt.setString(5, addr);
+		PreparedStatement psmt = conn.prepareStatement(sql);
+		psmt.setString(1, seq);
 
 		// 4) SQL 실행
 		psmt.executeUpdate();
@@ -51,7 +46,7 @@
 	
 	
 	// 목록 이동
-	response.sendRedirect("/ch05/user3/list.jsp?register=success");
+	response.sendRedirect("/ch05/user5/list.jsp?delete=success");
 	
 
 
