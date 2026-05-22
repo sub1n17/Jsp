@@ -1,3 +1,6 @@
+<%@page import="javax.sql.DataSource"%>
+<%@page import="javax.naming.InitialContext"%>
+<%@page import="javax.naming.Context"%>
 <%@page import="sub1.User4"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
@@ -15,17 +18,28 @@
 	// 데이터베이스 작업
 	// -------------------
 	
-	String host = "jdbc:mysql://127.0.0.1:3306/studydb";
-	String user = "sub1n17";
-	String pass = "1234";
+	//String host = "jdbc:mysql://127.0.0.1:3306/studydb";
+	//String user = "sub1n17";
+	//String pass = "1234";
 
 	try {
 		// 1) 드라이버 로드
-		Class.forName("com.mysql.cj.jdbc.Driver");
+		//Class.forName("com.mysql.cj.jdbc.Driver");
 		
 		// 2) 데이터베이스 접속
-		Connection conn = DriverManager.getConnection(host, user,pass);
+		//Connection conn = DriverManager.getConnection(host, user,pass);
 
+		
+		// -----------------
+		// *** DBCP 방식 ***
+		// -----------------
+		Context initctx = new InitialContext();
+		Context ctx = (Context) initctx.lookup("java:comp/env");
+		
+		DataSource ds = (DataSource) ctx.lookup("jdbc/studydb");
+		Connection conn = ds.getConnection();
+		
+		
 		// 3) SQL 실행 객체 생성
 		Statement stmt = conn.createStatement();
 
